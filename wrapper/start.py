@@ -43,7 +43,7 @@ parser.add_argument('url', type=str, help='URL to be tested')
 def get_headers():
     if TOKEN:
         return {'Authorization': 'Bearer {}'.format(TOKEN)}
-    logging.warning("=====> Auth TOKEN is not set!")
+    logger.error("Auth TOKEN is not set!")
     return None
 
 
@@ -53,7 +53,7 @@ def upload_artifacts(file_path):
         requests.post('{}/api/v1/artifacts/{}/{}/{}.json'.format(GALLOPER_URL, PROJECT, BUCKET, NAME),
                       files=file,
                       headers=get_headers())
-        logging.info("Upload Successful")
+        logger.debug("Upload Successful")
     except Exception:
         from time import sleep
         logging.error(format_exc())
@@ -76,12 +76,13 @@ def run():
     args = parser.parse_args()
     exec_string = '/start.sh --useSameDir --visualMetrics true --visuaElements true -o {} --skipHar -b {} --viewPort {} -n {} '.format(NAME, args.browser, VIEWPORT, int(ITERATIONS))
     if args.headers:
-        exec_string += '-r {} '.format(' -r '.join(args.headers))
+        for header in args.headers:
+            exec_string += f'-r "{header}" '
     exec_string += args.url
+    logger.debug(f"Execution String: {exec_string}")
     p = Popen(exec_string, stdout=PIPE, stderr=PIPE, shell=True)
     res = p.communicate()
-    logging.info(f"Execution result: {res[0]}")
-    logging.info(f"Execution error: {res[1]}")
+    logger.debug(f"Execution result: {res[0]}")
     zf = zipfile.ZipFile('/browsertime/{}.zip'.format(NAME), 'w', zipfile.ZIP_DEFLATED)
     zipdir('browsertime-results/', zf)
     zf.close()
