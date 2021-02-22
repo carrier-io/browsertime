@@ -2,8 +2,8 @@ import argparse
 import requests
 import zipfile
 import logging
-import logging_loki
-from multiprocessing import Queue
+# import logging_loki
+# from multiprocessing import Queue
 
 from os import environ, path, walk, sep
 from traceback import format_exc
