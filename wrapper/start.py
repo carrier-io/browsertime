@@ -22,16 +22,16 @@ VIEWPORT = environ.get("view", "1920x1080")
 ITERATIONS = environ.get("tests", "1")
 LOG_LEVEL = environ.get("log_level", "info")
 
-if GALLOPER_URL:
-    handler = logging_loki.LokiQueueHandler(
-        Queue(-1),
-        url=f"{GALLOPER_URL.replace('https://', 'http://')}:3100/loki/api/v1/push",
-        tags={"application": "interceptor"},
-        version="1",
-    )
-
-    logger.setLevel(logging.INFO if LOG_LEVEL == 'info' else logging.DEBUG)
-    logger.addHandler(handler)
+# if GALLOPER_URL:
+#     handler = logging_loki.LokiQueueHandler(
+#         Queue(-1),
+#         url=f"{GALLOPER_URL.replace('https://', 'http://')}:3100/loki/api/v1/push",
+#         tags={"application": "interceptor"},
+#         version="1",
+#     )
+#
+#     logger.setLevel(logging.INFO if LOG_LEVEL == 'info' else logging.DEBUG)
+#     logger.addHandler(handler)
 
 parser = argparse.ArgumentParser(description='Browsertime Args Parser')
 parser.add_argument('--browser', '-b', type=str, nargs="?", default='chrome', help='Broser to be tested, chrome and firefox are allowed')
