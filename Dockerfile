@@ -12,6 +12,6 @@ COPY wrapper/start.py /browsertime/start.py
 
 WORKDIR /browsertime
 
-RUN pip install -r requirements.txt
+RUN python3.8 -m pip install -r requirements.txt
 
 ENTRYPOINT ["python3.8", "-u", "start.py"]

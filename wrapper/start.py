@@ -34,7 +34,8 @@ if GALLOPER_URL:
     logger.addHandler(handler)
 
 parser = argparse.ArgumentParser(description='Browsertime Args Parser')
-parser.add_argument('--browser', '-b', type=str, nargs="?", default='chrome', help='Broser to be tested, chrome and firefox are allowed')
+parser.add_argument('--browser', '-b', type=str, nargs="?", default='chrome',
+                    help='Broser to be tested, chrome and firefox are allowed')
 parser.add_argument('--headers', '-H', type=str, nargs="*", help='Headers in construct of KEY:VALUE')
 parser.add_argument('url', type=str, help='URL to be tested')
 
